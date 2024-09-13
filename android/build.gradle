@@ -60,6 +60,8 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.17.1'
     implementation 'androidx.core:core-ktx:1.13.0-alpha01'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
+    // ARSceneview
+    implementation 'io.github.sceneview:arsceneview:2.2.1'
 }
 
 afterEvaluate {
