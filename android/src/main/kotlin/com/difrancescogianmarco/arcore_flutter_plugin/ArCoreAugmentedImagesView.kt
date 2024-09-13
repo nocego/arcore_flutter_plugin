@@ -363,4 +363,28 @@ class ArCoreAugmentedImagesView(activity: Activity, context: Context, messenger:
             return  null
         }
     }
+
+    fun loadAnimatedModel(glbFilePath: String, animationName: String) {
+        ModelRenderable.builder()
+            .setSource(context, Uri.parse(glbFilePath))
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept { modelRenderable ->
+                val node = TransformableNode(arFragment.transformationSystem)
+                node.setParent(arFragment.arSceneView.scene)
+                node.renderable = modelRenderable
+                node.select()
+
+                // Play animation
+                if (modelRenderable.animationDataCount > 0) {
+                    val animationData = modelRenderable.getAnimationData(animationName)
+                    val animationInstance = modelRenderable.createAnimationInstance(animationData)
+                    animationInstance.start()
+                }
+            }
+            .exceptionally { throwable ->
+                Log.e("ARCore", "Unable to load GLB model", throwable)
+                null
+            }
+    }
 }

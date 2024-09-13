@@ -133,6 +133,17 @@ class ArCoreController {
     return Future.value();
   }
 
+  Future<void> loadAnimatedModel(String glbFilePath, String animationName) async {
+    try {
+      await _channel.invokeMethod('loadAnimatedModel', {
+        'glbFilePath': glbFilePath,
+        'animationName': animationName,
+      });
+    } on PlatformException catch (e) {
+      print("Failed to load animated model: '${e.message}'.");
+    }
+  }
+
   Future<void> addArCoreNode(ArCoreNode node, {String? parentNodeName}) {
     final params = _addParentNodeNameToParams(node.toMap(), parentNodeName);
     if (debug ?? true) {
